@@ -40,16 +40,14 @@
   <%= check_box_tag 'settings[inherit_is_private]', 1, @settings[:inherit_is_private] %>
 </p>
 
-<p>  
-  <label><%= l(:inherit_parent_tracker) %></label>
-  <%= check_box_tag 'settings[inherit_tracker_id]', 1, @settings[:inherit_tracker_id] %>
-</p>
-
-<p>  
-  <label id="settings_default_tracker_id_label"><%= l(:default_subtask_tracker) %></label>
-  <%= select_tag "settings[default_tracker_id]", options_for_select(Tracker.all.map {|t| [t.name, t.id]},@settings[:default_tracker_id]) %>
-</p>
-
-<% content_for :header_tags do %>
-  <%= javascript_include_tag :subtasks_inherited_fields, :plugin => 'redmine_subtasks_inherited_fields' %>
+<h3>
+<b><%= l(:default_subtask_tracker) %> </b></br>
+</h3>
+<p>
+<%- @settings[:default_trackers_id] = {} if @settings[:default_trackers_id].nil? -%>
+<% trackers = Tracker.find(:all) %>
+<% trackers.each do  |tracker| %>
+<label><%= tracker.name %></label>
+ <%= select_tag "settings[default_trackers_id][#{tracker.id}]", options_for_select(Tracker.all.map {|t| [t.name, t.id]},@settings[:default_trackers_id][tracker.id.to_s]) %><br />
 <% end %>
+</p>

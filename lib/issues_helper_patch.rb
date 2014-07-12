@@ -9,16 +9,13 @@ module SubtasksInheritedFields
         settings = settings.value if settings.respond_to? :value
         settings = {} if settings == ""
         attrs = {
-          #:tracker_id => issue.tracker,
           :parent_issue_id => issue
         }
-        if settings[:inherit_tracker_id] #inherit tracker
-          attrs[:tracker_id] = issue.tracker
-        else #use default subtask tracker
-          default_tracker = Tracker.find_by_id(settings[:default_tracker_id] || 0) || issue.tracker
-          default_tracker = issue.tracker unless @project.trackers.include? default_tracker
-          attrs[:tracker_id] = default_tracker
-        end
+
+        default_tracker = Tracker.find_by_id(settings[:default_trackers_id][issue.tracker.id.to_s] || 0) || issue.tracker
+        default_tracker = issue.tracker unless @project.trackers.include? default_tracker
+
+        attrs[:tracker_id] = default_tracker
         attrs[:fixed_version_id] = issue.fixed_version_id if settings[:inherit_fixed_version_id]
         attrs[:category_id] = issue.category_id if settings[:inherit_category_id]
         attrs[:assigned_to_id] = issue.assigned_to_id if settings[:inherit_assigned_to_id]
@@ -27,6 +24,7 @@ module SubtasksInheritedFields
         attrs[:due_date] = issue.start_date if settings[:inherit_due_date]
         attrs[:is_private] = issue.is_private if settings[:inherit_is_private]
         attrs[:status_id] = issue.status_id if settings[:inherit_status_id]
+
         link_to(l(:button_add), new_project_issue_path(issue.project, :issue => attrs))
       end
     end

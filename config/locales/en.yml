@@ -1,7 +1,7 @@
 # English strings go here for Rails i18n
 en:
   subtasks_inherited_fields_plugin_config_title: "Select fields to inherit when creating a subtask"
-  default_subtask_tracker: "Default subtask Tracker (when is not inherited from parent task)"
+  default_subtask_tracker: "Default subtasks for Trackers (when are not inherited from parent task)"
   inherit_fixed_version: "Inherit parent Target version"
   inherit_assigned_to: "Inherit parent Assignee"
   inherit_category: "Inherit parent Category"
@@ -10,4 +10,3 @@ en:
   inherit_start_date: "Inherit parent Start date"
   inherit_due_date: "Inherit parent Due date"
   inherit_is_private: "Inherit parent Private"
-  inherit_parent_tracker: "Inherit parent Tracker"
